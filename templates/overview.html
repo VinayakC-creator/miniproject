@@ -1,0 +1,93 @@
+{% extends 'dashboard.html' %}
+
+{% block content %}
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-12">
+            <div class="table-container">
+                <h2 class="mb-4">Student Performance Database</h2>
+
+                <!-- Quick Stats -->
+                <div class="row mb-4">
+                    <div class="col-md-3">
+                        <div class="stats-card">
+                            <h5>Total Students</h5>
+                            <p class="h3">{{ students|length }}</p>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="stats-card">
+                            <h5>Average Final Grade</h5>
+                            <p class="h3">
+                                {% if students|length > 0 %}
+                                    {{ "%.2f"|format(students|map(attribute='final_grade')|list|sum / students|length) }}
+                                {% else %}
+                                    0.00
+                                {% endif %}
+                            </p>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="stats-card">
+                            <h5>Average Attendance</h5>
+                            <p class="h3">
+                                {% if students|length > 0 %}
+                                    {{ "%.2f"|format(students|map(attribute='attendance_rate')|list|sum / students|length) }}%
+                                {% else %}
+                                    0.00%
+                                {% endif %}
+                            </p>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="stats-card">
+                            <h5>Average Study Hours</h5>
+                            <p class="h3">
+                                {% if students|length > 0 %}
+                                    {{ "%.2f"|format(students|map(attribute='study_hours')|list|sum / students|length) }}
+                                {% else %}
+                                    0.00
+                                {% endif %}
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Student Data Table -->
+                <div class="table-responsive">
+                    <table class="table table-striped table-hover">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Name</th>
+                                <th>Gender</th>
+                                <th>Attendance Rate</th>
+                                <th>Study Hours/Week</th>
+                                <th>Previous Grade</th>
+                                <th>Extracurricular</th>
+                                <th>Parental Support</th>
+                                <th>Final Grade</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for student in students %}
+                            <tr>
+                                <td>{{ student.id }}</td>
+                                <td>{{ student.name }}</td>
+                                <td>{{ student.gender }}</td>
+                                <td>{{ student.attendance_rate }}%</td>
+                                <td>{{ student.study_hours }}</td>
+                                <td>{{ student.previous_grade }}</td>
+                                <td>{{ student.extracurricular_activities }}</td>
+                                <td>{{ student.parental_support }}</td>
+                                <td>{{ student.final_grade }}</td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

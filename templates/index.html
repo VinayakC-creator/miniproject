@@ -1,0 +1,674 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta content="width=device-width, initial-scale=1.0" name="viewport">
+  <title>{% block title %}QuickGrade{% endblock %}</title>
+  <meta name="description" content="">
+  <meta name="keywords" content="">
+
+  <!-- Favicons -->
+  <link href="static/img/apple-touch-icon.png" rel="icon">
+  <link href="static/img/apple-touch-icon.png" rel="apple-touch-icon">
+
+  <!-- Fonts -->
+  <link href="https://fonts.googleapis.com" rel="preconnect">
+  <link href="https://fonts.gstatic.com" rel="preconnect" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&family=Inter:wght@100;200;300;400;500;600;700;800;900&family=Nunito:ital,wght@0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
+
+  <!-- Vendor CSS Files -->
+  <link href="static/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+  <link href="static/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
+  <link href="static/vendor/aos/aos.css" rel="stylesheet">
+  <link href="static/vendor/glightbox/css/glightbox.min.css" rel="stylesheet">
+  <link href="static/vendor/swiper/swiper-bundle.min.css" rel="stylesheet">
+
+  <!-- Main CSS File -->
+  <link href="static/css/main.css" rel="stylesheet">
+  {% block head %} {% endblock %}
+
+</head>
+<body class="index-page">
+
+  <header id="header" class="header d-flex align-items-center fixed-top">
+    <div class="container-fluid container-xl position-relative d-flex align-items-center">
+
+      <a href="{{ url_for('home') }}" class="logo d-flex align-items-center me-auto">
+        <img src="static/img/logo.png" alt="">
+        <h1 class="sitename">Quick Grade.</h1>
+      </a>
+
+      <nav id="navmenu" class="navmenu">
+        <ul>
+          <li><a href="{{ url_for('home') }}#about">About</a></li>
+          {% block link %}<li><a href="{{ url_for('dashboard') }}">Dashboard</a></li>{% endblock %}
+          {% block link1 %}<li><a href="{{ url_for('overview') }}">Overview</a></li>{% endblock %}
+          {% block link4 %} <li><a href="{{ url_for('predict') }}#features">Predictor</a></li>{% endblock %}
+          <li><a href="{{ url_for('home') }}#features">Features</a></li>
+          <li><a href="{{ url_for('home') }}#contact">Contact</a></li>
+        </ul>
+        <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
+      </nav>
+
+      <a class="btn-getstarted" id="loginButton" href="{{ url_for('login') }}">Login</a>
+
+    </div>
+  </header>
+  {%block body %}
+
+  <main class="main">
+
+    <!-- Hero Section -->
+    <section id="hero" class="hero section">
+      <div class="hero-bg">
+        <img src="static/img/hero-bg-light.webp" alt="">
+      </div>
+      <div class="container text-center">
+        <div class="d-flex flex-column justify-content-center align-items-center">
+          <h1 data-aos="fade-up">Welcome to <span>
+
+          </span>Quick Grade.</h1>
+          <p data-aos="fade-up" data-aos-delay="100">Empowering Insights for Academic Success<br></p>
+          <div class="d-flex" data-aos="fade-up" data-aos-delay="200">
+            <a href="{{ url_for('login') }}" class="btn-get-started">Get Started</a>
+            <a href="https://youtu.be/_OVLTtRY83A?si=rYHiF8CTNQsoOF-f" class="glightbox btn-watch-video d-flex align-items-center"><i class="bi bi-play-circle"></i><span>Watch Video</span></a>
+          </div>
+          <img src="static/img/hero-services-img.webp" class="img-fluid hero-img" alt="" data-aos="zoom-out" data-aos-delay="300">
+        </div>
+      </div>
+
+    </section><!-- /Hero Section -->
+
+    <!-- Featured Services Section -->
+    <section id="featured-services" class="featured-services section light-background">
+
+      <div class="container">
+
+        <div class="row gy-4">
+
+          <div class="col-xl-4 col-lg-6" data-aos="fade-up" data-aos-delay="100">
+            <div class="service-item d-flex">
+              <div class="icon flex-shrink-0"><i class="bi bi-briefcase"></i></div>
+              <div>
+                <h4 class="title"><a href="{{ url_for('services') }}" class="stretched-link">Adaptive Learning</a></h4>
+                <p class="description">Offers Personalised Motivational tips and Strategies.</p>
+              </div>
+            </div>
+          </div>
+          <!-- End Service Item -->
+
+          <div class="col-xl-4 col-lg-6" data-aos="fade-up" data-aos-delay="200">
+            <div class="service-item d-flex">
+              <div class="icon flex-shrink-0"><i class="bi bi-card-checklist"></i></div>
+              <div>
+                <h4 class="title"><a href="{{ url_for('services') }}" class="stretched-link">Skill Assessment</a></h4>
+                <p class="description">Manage your Skills efficiently with Dynamic Content based on Individual Report.</p>
+              </div>
+            </div>
+          </div><!-- End Service Item -->
+
+          <div class="col-xl-4 col-lg-6" data-aos="fade-up" data-aos-delay="300">
+            <div class="service-item d-flex">
+              <div class="icon flex-shrink-0"><i class="bi bi-bar-chart"></i></div>
+              <div>
+                <h4 class="title"><a href="{{ url_for('services') }}" class="stretched-link">Subject Insights</a></h4>
+                <p class="description">Detailed Insights and predictions for individual subjects or topics. </p>
+              </div>
+            </div>
+          </div><!-- End Service Item -->
+
+        </div>
+
+      </div>
+
+    </section><!-- /Featured Services Section -->
+
+    <!-- About Section -->
+    <section id="about" class="about section">
+
+      <div class="container">
+
+        <div class="row gy-4">
+
+          <div class="col-lg-6 content" data-aos="fade-up" data-aos-delay="100">
+            <p class="who-we-are">the purpose</p>
+            <h3>Unleashing Academic Success with Intelligent Insights</h3>
+            <p class="fst-italic">
+              We are pioneers in the field of Educational Technology, dedicated to providing innovative Solutions that help Students and institutions achieve their academic goals.
+            </p>
+            <ul>
+              <li><i class="bi bi-check-circle"></i> <span>Predict Performance: Utilize advanced algorithms to forecast students' academic outcomes based on historical data, study habits, and attendance. Gain insights into strengths and areas for improvement.</span></li>
+              <li><i class="bi bi-check-circle"></i> <span> Personalized Recommendations: Receive tailored study plans, resources, and actionable feedback to enhance learning and achieve academic excellence. Our platform equips students with strategies for long-term success.</span></li>
+            </ul>
+            <a href="{{ url_for('dashboard') }}" class="read-more"><span>Explore</span><i class="bi bi-arrow-right"></i></a>
+          </div>
+
+          <div class="col-lg-6 about-images" data-aos="fade-up" data-aos-delay="200">
+            <div class="row gy-4">
+              <div class="col-lg-6">
+                <img src="static/img/about-company-1.jpg" class="img-fluid" alt="">
+              </div>
+              <div class="col-lg-6">
+                <div class="row gy-4">
+                  <div class="col-lg-12">
+                    <img src="static/img/about-company-2.jpg" class="img-fluid" alt="">
+                  </div>
+                  <div class="col-lg-12">
+                    <img src="static/img/about-company-3.jpg" class="img-fluid" alt="">
+                  </div>
+                </div>
+              </div>
+            </div>
+
+          </div>
+
+        </div>
+
+      </div>
+    </section><!-- /About Section -->
+
+    <!-- Clients Section -->
+    <section id="clients" class="clients section">
+
+      <div class="container" data-aos="fade-up">
+
+        <div class="row gy-4">
+
+          <div class="col-xl-2 col-md-3 col-6 client-logo">
+            <img src="static/img/clients/client-1.png" class="img-fluid" alt="">
+          </div><!-- End Client Item -->
+
+          <div class="col-xl-2 col-md-3 col-6 client-logo">
+            <img src="static/img/clients/client-2.png" class="img-fluid" alt="">
+          </div><!-- End Client Item -->
+
+          <div class="col-xl-2 col-md-3 col-6 client-logo">
+            <img src="static/img/clients/client-3.png" class="img-fluid" alt="">
+          </div><!-- End Client Item -->
+
+          <div class="col-xl-2 col-md-3 col-6 client-logo">
+            <img src="static/img/clients/client-4.png" class="img-fluid" alt="">
+          </div><!-- End Client Item -->
+
+          <div class="col-xl-2 col-md-3 col-6 client-logo">
+            <img src="static/img/clients/client-5.png" class="img-fluid" alt="">
+          </div><!-- End Client Item -->
+
+          <div class="col-xl-2 col-md-3 col-6 client-logo">
+            <img src="static/img/clients/client-6.png" class="img-fluid" alt="">
+          </div><!-- End Client Item -->
+
+        </div>
+
+      </div>
+
+    </section><!-- /Clients Section -->
+
+    <!-- Features Section -->
+    <section id="features" class="features section">
+
+      <!-- Section Title -->
+      <div class="container section-title" data-aos="fade-up">
+        <h2>Features</h2>
+        <p>Functionalities offered by Us</p>
+      </div><!-- End Section Title -->
+
+      <div class="container">
+        <div class="row justify-content-between">
+
+          <div class="col-lg-5 d-flex align-items-center">
+
+            <ul class="nav nav-tabs" data-aos="fade-up" data-aos-delay="100">
+              <li class="nav-item">
+                <a class="nav-link active show" data-bs-toggle="tab" data-bs-target="#features-tab-1">
+                  <i class="bi bi-binoculars"></i>
+                  <div>
+                    <h4 class="d-none d-lg-block"> Automated Performance Tracking</h4>
+                    <p>
+                      Collect and analyze student performance data, including test scores, attendance, and participation, to provide detailed insights in real-time
+                    </p>
+                  </div>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" data-bs-toggle="tab" data-bs-target="#features-tab-2">
+                  <i class="bi bi-box-seam"></i>
+                  <div>
+                    <h4 class="d-none d-lg-block">Custom Goal Setting</h4>
+                    <p>
+                      Custom Goal Setting Enables teachers and students to set academic goals for subjects and monitor progress over time.
+                    </p>
+                  </div>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" data-bs-toggle="tab" data-bs-target="#features-tab-3">
+                  <i class="bi bi-brightness-high"></i>
+                  <div>
+                    <h4 class="d-none d-lg-block"> Real-Time Feedback:
+                    </h4>
+                    <p>
+                      Predict future performance trends based on historical data, and provide actionable feedback to improve outcomes.
+                    </p>
+                  </div>
+                </a>
+              </li>
+            </ul><!-- End Tab Nav -->
+
+          </div>
+
+          <div class="col-lg-6">
+
+            <div class="tab-content" data-aos="fade-up" data-aos-delay="200">
+
+              <div class="tab-pane fade active show" id="features-tab-1">
+                <img src="static/img/tabs-1.jpg" alt="" class="img-fluid">
+              </div><!-- End Tab Content Item -->
+
+              <div class="tab-pane fade" id="features-tab-2">
+                <img src="static/img/tabs-2.jpg" alt="" class="img-fluid">
+              </div><!-- End Tab Content Item -->
+
+              <div class="tab-pane fade" id="features-tab-3">
+                <img src="static/img/tabs-3.jpg" alt="" class="img-fluid">
+              </div><!-- End Tab Content Item -->
+            </div>
+
+          </div>
+
+        </div>
+
+      </div>
+
+    </section><!-- /Features Section -->
+
+    <!-- Faq Section -->
+    <section id="faq" class="faq section">
+
+      <!-- Section Title -->
+      <div class="container section-title" data-aos="fade-up">
+        <h2>Frequently Asked Questions</h2>
+      </div><!-- End Section Title -->
+
+      <div class="container">
+
+        <div class="row justify-content-center">
+
+          <div class="col-lg-10" data-aos="fade-up" data-aos-delay="100">
+
+            <div class="faq-container">
+
+              <div class="faq-item faq-active">
+                <h3>What is a Student Performance Predictor?</h3>
+                <div class="faq-content">
+                  <p>A Student Performance Predictor is a tool designed to help analyze and predict a student's academic performance based on various inputs such as attendance, previous grades, participation, and more. It provides insights into areas of improvement, helping students achieve better outcomes.</p>
+                </div>
+                <i class="faq-toggle bi bi-chevron-right"></i>
+              </div><!-- End Faq item-->
+
+              <div class="faq-item">
+                <h3>How do I add a student's data?</h3>
+                <div class="faq-content">
+                  <p>To add a student's data: Open the app and navigate to the "Add Student Data" section. Enter details such as attendance percentage, test scores, and participation levels.</p>
+                </div>
+                <i class="faq-toggle bi bi-chevron-right"></i>
+              </div><!-- End Faq item-->
+
+              <div class="faq-item">
+                <h3>Can I track performance over time?</h3>
+                <div class="faq-content">
+                  <p>Yes, most student performance predictor tools allow you to track academic progress over time. You can analyze trends and identify patterns to make informed decisions that enhance learning outcomes.</p>
+                </div>
+                <i class="faq-toggle bi bi-chevron-right"></i>
+              </div><!-- End Faq item-->
+
+              <div class="faq-item">
+                <h3>What does a Student Performance Predictor do?</h3>
+                <div class="faq-content">
+                  <p>A Student Performance Predictor helps evaluate and forecast a student's academic success by analyzing key factors like attendance, grades, and classroom engagement. It offers actionable recommendations to improve academic performance.</p>
+                </div>
+                <i class="faq-toggle bi bi-chevron-right"></i>
+              </div><!-- End Faq item-->
+
+              <div class="faq-item">
+                <h3>How can I input student information?</h3>
+                <div class="faq-content">
+                  <p>To input student information: Access the "Student Data Entry" section within the app. Add details like attendance records, exam results, assignment scores, and extracurricular participation.</p>
+                </div>
+                <i class="faq-toggle bi bi-chevron-right"></i>
+              </div><!-- End Faq item-->
+
+              <div class="faq-item">
+                <h3>Is it possible to monitor long-term academic trends?</h3>
+                <div class="faq-content">
+                  <p>Yes, the tool allows you to track long-term academic trends. By reviewing historical data, you can identify areas that require focus and measure improvements over time.</p>
+                </div>
+                <i class="faq-toggle bi bi-chevron-right"></i>
+              </div><!-- End Faq item-->
+
+            </div>
+
+          </div><!-- End Faq Column-->
+
+        </div>
+
+      </div>
+
+    </section><!-- /Faq Section -->
+
+    <!-- Testimonials Section -->
+    <section id="testimonials" class="testimonials section light-background">
+
+      <!-- Section Title -->
+      <div class="container section-title" data-aos="fade-up">
+        <h2>Feedbacks</h2>
+        <p>What our Users Say, and their Experience With the User Interface</p>
+      </div><!-- End Section Title -->
+
+      <div class="container" data-aos="fade-up" data-aos-delay="100">
+
+        <div class="swiper init-swiper">
+          <script type="application/json" class="swiper-config">
+            {
+              "loop": true,
+              "speed": 600,
+              "autoplay": {
+                "delay": 5000
+              },
+              "slidesPerView": "auto",
+              "pagination": {
+                "el": ".swiper-pagination",
+                "type": "bullets",
+                "clickable": true
+              },
+              "breakpoints": {
+                "320": {
+                  "slidesPerView": 1,
+                  "spaceBetween": 40
+                },
+                "1200": {
+                  "slidesPerView": 3,
+                  "spaceBetween": 1
+                }
+              }
+            }
+          </script>
+          <div class="swiper-wrapper">
+
+            <div class="swiper-slide">
+              <div class="testimonial-item">
+                <div class="stars">
+                  <i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i>
+                </div>
+                <p>
+                  "The app is good for basic tracking, but I wish it had more advanced features for long-term Insights and Overviews. I would like to be able to set Performance goals like UpSkilling and have the app provide Predicted suggestions. It could use more Responsive content too."
+                </p>
+                <div class="profile mt-auto">
+                  <img src="static/img/testimonials/testimonials-1.jpg" class="testimonial-img" alt="">
+                  <h3>Neha L</h3>
+                  <h4>8<sup>th</sup> Grade</h4>
+                </div>
+              </div>
+            </div><!-- End testimonial item -->
+
+            <div class="swiper-slide">
+              <div class="testimonial-item">
+                <div class="stars">
+                  <i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i>
+                </div>
+                <p>
+                  "I really like the Site's ability to track Performance, but I think it needs a more robust Prediction management system. For example, it would be great to see a breakdown of my monthly Grades over the course of a year, or a forecast of what my Grades might look like next month. I hope this gets improved soon."
+                </p>
+                <div class="profile mt-auto">
+                  <img src="static/img/testimonials/testimonials-2.jpg" class="testimonial-img" alt="">
+                  <h3>Harika</h3>
+                  <h4>9<sup>th</sup> Grade</h4>
+                </div>
+              </div>
+            </div><!-- End testimonial item -->
+
+            <div class="swiper-slide">
+              <div class="testimonial-item">
+                <div class="stars">
+                  <i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i>
+                </div>
+                <p>
+                  "I love how this Site helps me stay on top of my Tracking. The integration with my Child's ID is seamless, and I receive real-time updates. I can see my child's Performance clearly, and the app even sends me notifications if I’m close to exceeding my limit. Very convenient!"
+                <div class="profile mt-auto">
+                  <img src="static/img/testimonials/testimonials-3.jpg" class="testimonial-img" alt="">
+                  <h3>Priya M</h3>
+                  <h4>Parent</h4>
+                </div>
+              </div>
+            </div><!-- End testimonial item -->
+
+            <div class="swiper-slide">
+              <div class="testimonial-item">
+                <div class="stars">
+                  <i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i>
+                </div>
+                <p>"I’ve been using this app for my Educational Insights, and it’s been fantastic. The separate categories for Personalised Subjects are very useful, and the unique id feature has saved me so much time. The reports are also great for tracking at the end of Academics."</p>
+              
+                <div class="profile mt-auto">
+                  <img src="static/img/testimonials/testimonials-4.jpg" class="testimonial-img" alt="">
+                  <h3>Nikhil R.</h3>
+                  <h4>10<sup>th</sup> Grade</h4>
+                </div>
+              </div>
+            </div><!-- End testimonial item -->
+
+            <div class="swiper-slide">
+              <div class="testimonial-item">
+                <div class="stars">
+                  <i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i>
+                </div>
+                <p>
+                  "I’ve been using this Website for a couple of months now, and it’s been a game-changer. As a Newbie, keeping track of variable Subjects and Grades can be tricky, but this app helps me stay organized. The ability to track multiple Subjects, including my Optional and Elective Subjects, is awesome!"
+                </p>
+                <div class="profile mt-auto">
+                  <img src="static/img/testimonials/testimonials-5.jpg" class="testimonial-img" alt="">
+                  <h3>Raj .S</h3>
+                  <h4>12<sup>th</sup> Grade</h4>
+                </div>
+              </div>
+            </div><!-- End testimonial item -->
+
+          </div>
+          <div class="swiper-pagination"></div>
+        </div>
+
+      </div>
+
+    </section><!-- /Testimonials Section -->
+
+    <!-- Contact Section -->
+    <section id="contact" class="contact section">
+
+      <!-- Section Title -->
+      <div class="container section-title" data-aos="fade-up">
+        <h2>Contact</h2>
+        <p>Feel Free to Contact Us</p>
+      </div><!-- End Section Title -->
+
+      <div class="container" data-aos="fade-up" data-aos-delay="100">
+
+        <div class="row gy-4">
+
+          <div class="col-lg-6">
+            <div class="info-item d-flex flex-column justify-content-center align-items-center" data-aos="fade-up" data-aos-delay="200">
+              <i class="bi bi-geo-alt"></i>
+              <h3>Address</h3>
+              <p>A108 Poorvankara, Mallasandra, Bengaluru 560091</p>
+            </div>
+          </div><!-- End Info Item -->
+
+          <div class="col-lg-3 col-md-6">
+            <div class="info-item d-flex flex-column justify-content-center align-items-center" data-aos="fade-up" data-aos-delay="300">
+              <i class="bi bi-telephone"></i>
+              <h3>Call Us</h3>
+              <p>080 28425019/13</p>
+            </div>
+          </div><!-- End Info Item -->
+
+          <div class="col-lg-3 col-md-6">
+            <div class="info-item d-flex flex-column justify-content-center align-items-center" data-aos="fade-up" data-aos-delay="400">
+              <i class="bi bi-envelope"></i>
+              <h3>Email Us</h3>
+              <p>QuickFin.Support@gmail.com</p>
+            </div>
+          </div><!-- End Info Item -->
+
+        </div>
+
+        <div class="row gy-4 mt-1">
+          <div class="col-lg-6" data-aos="fade-up" data-aos-delay="300">
+            <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3889.751596528373!2d77.5427583!3d12.859314200000002!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3bae407386b7172d%3A0x1569e8679d608fe0!2sK%20S%20School%20of%20Engineering%20and%20Management!5e0!3m2!1sen!2sin!4v1732982311883!5m2!1sen!2sin" frameborder="0" style="border:0; width: 100%; height: 400px;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+          </div><!-- End Google Maps -->
+<div class="col-lg-6">
+    <form id="contactForm" method="POST" action="/submit_form" class="php-email-form" data-aos="fade-up" data-aos-delay="400">
+        <div class="row gy-4">
+
+            <div class="col-md-6">
+                <input type="text" id="name" name="name" class="form-control" placeholder="Your Name" required="">
+            </div>
+
+            <div class="col-md-6">
+                <input type="email" id="email" class="form-control" name="email" placeholder="Your Email" required="">
+            </div>
+
+            <div class="col-md-12">
+                <input type="text" class="form-control" name="subject" placeholder="Subject" required="">
+            </div>
+
+            <div class="col-md-12">
+                <textarea class="form-control" id="message" name="message" rows="6" placeholder="Message" required=""></textarea>
+            </div>
+
+            <div class="col-md-12 text-center">
+                <div class="sent-message" id="sentMessage" style="display: none;">Your message has been sent. Thank you!</div>
+                <button type="submit">Submit</button>
+            </div>
+
+        </div>
+    </form>
+</div>
+
+<!-- Pop-up modal -->
+<div id="thankYouModal" style="display: none; position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); background-color: rgba(0, 0, 0, 0.7); color: white; padding: 20px; border-radius: 10px; text-align: center;">
+    <h2>Thank you for contacting us!</h2>
+    <p>Your message has been received. We will get back to you soon.</p>
+    <button onclick="closeModal()">Close</button>
+</div>
+
+- End Contact Form -->
+
+        </div></div>
+
+    </section><!-- /Contact Section -->
+    <script>
+    // JavaScript to handle form submission
+    document.getElementById("contactForm").addEventListener("submit", function(event) {
+        event.preventDefault();  // Prevent form submission
+
+        // Simulate form submission success
+        document.getElementById("thankYouModal").style.display = "block";  // Show modal
+
+        // Optionally, you can reset the form after submission
+        document.getElementById("contactForm").reset();
+    });
+
+    // Function to close the thank you modal
+    function closeModal() {
+        document.getElementById("thankYouModal").style.display = "none";  // Hide modal
+    }
+</script>
+
+  </main>
+  {% endblock %}
+
+  <footer id="footer" class="footer position-relative light-background">
+
+    <div class="container footer-top">
+      <div class="row gy-4">
+        <div class="col-lg-4 col-md-6 footer-about">
+          <a href="index.html" class="logo d-flex align-items-center">
+            <span class="sitename">Quick Grade.</span>
+          </a>
+          <div class="footer-contact pt-3">
+            <p>Poorvankara</p>
+            <p>Mallasandra, Bengaluru 560091</p>
+            <p class="mt-3"><strong>Phone:</strong> <span> 080-28425019/13</span></p>
+            <p><strong>Email:</strong> <span>Quickfin.support@gmail.com</span></p>
+          </div>
+          <div class="social-links d-flex mt-4">
+            <a href=""><i class="bi bi-twitter-x"></i></a>
+            <a href=""><i class="bi bi-facebook"></i></a>
+            <a href=""><i class="bi bi-instagram"></i></a>
+            <a href=""><i class="bi bi-linkedin"></i></a>
+          </div>
+        </div>
+
+        <div class="col-lg-2 col-md-3 footer-links">
+          <h4>Useful Links</h4>
+          <ul>
+            <li><a href="index.html">Home</a></li>
+            <li><a href="about.html">About</a></li>
+            <li><a href="services.html">Dashboard</a></li>
+            <li><a href="#">Terms of service</a></li>
+            <li><a href="#">Privacy policy</a></li>
+          </ul>
+        </div>
+
+        <div class="col-lg-2 col-md-3 footer-links">
+          <h4>Our Services</h4>
+          <ul>
+            <li><a href="#">Insights</a></li>
+            <li><a href="#">Performance Predictor</a></li>
+            <li><a href="#">Grade Management</a></li>
+            <li><a href="#">Personal Interests</a></li>
+          </ul>
+        </div>
+
+      </div>
+    </div>
+
+    <div class="container copyright text-center mt-4">
+      <p>© <span>Copyright</span> <strong class="px-1 sitename">Quick Grade.</strong><span>All Rights Reserved</span></p>
+      <div class="credits">
+        Designed by Nuts.Co Dist Quick Grade Services.
+      </div>
+    </div>
+
+  </footer>
+
+  <!-- Scroll Top -->
+  <a href="#" id="scroll-top" class="scroll-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
+
+  <!-- Preloader -->
+  <div id="preloader"></div>
+
+  <!-- Vendor JS Files -->
+  <script src="static/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+  <script src="static/vendor/php-email-form/validate.js"></script>
+  <script src="static/vendor/aos/aos.js"></script>
+  <script src="static/vendor/glightbox/js/glightbox.min.js"></script>
+  <script src="static/vendor/swiper/swiper-bundle.min.js"></script>
+
+  <!-- Main JS File -->
+  <script src="static/js/main.js"></script>
+  <script>
+    // When the user scrolls the page, execute myFunction
+window.onscroll = function() {myFunction()};
+
+function myFunction() {
+  var winScroll = document.body.scrollTop || document.documentElement.scrollTop;
+  var height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+  var scrolled = (winScroll / height) * 100;
+  document.getElementById("myBar").style.width = scrolled + "%";
+}
+  </script>
+
+</body>
+
+</html>

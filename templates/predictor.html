@@ -1,0 +1,250 @@
+{% extends 'dashboard.html' %}
+{% block title %}Predictor | QuickGrade{% endblock %}
+{% block link3 %}{% endblock %}
+{% block head %}
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Performance Predictor</title>
+    <link rel="stylesheet" href="{{ ('static/css/main.css') }}">
+    <link rel="stylesheet" href="{{ ('static/css/dash.css') }}">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-gradient@0.1.0"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+    background-color: #121212;
+    color: #e0e0e0;
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    margin-top: 90px;
+}
+        .chart-container {
+            position: relative;
+            height: 400px;
+            margin-bottom: 2rem;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            border-radius: 10px;
+            overflow: hidden;
+        }
+        .prediction-result {
+            background: linear-gradient(145deg, #e0f2fe, #bae6fd);
+            padding: 2rem;
+            border-radius: 12px;
+            text-align: center;
+            margin: 1rem 0;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+        }
+        .prediction-value {
+            font-size: 3rem;
+            font-weight: bold;
+            background: linear-gradient(45deg, #3b82f6, #10b981);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+    </style>
+</head>
+{% endblock %}
+
+{% block body %}
+<body>
+<br><br><br><br><br><br>
+    <div class="container py-4">
+        <div class="row">
+            <!-- Input Form -->
+            <div class="col-md-6">
+                <div class="card">
+                    <div class="card-header">
+                        <h3>Enter Local Student  Data</h3>
+                    </div>
+                    <div class="card-body">
+                        <form id="studentForm">
+                            <div class="mb-3">
+                                <label for="name" class="form-label">Name:</label>
+                                <input type="text" class="form-control" id="name" required>
+                            </div>
+                            <div class="mb-3">
+                                <label for="attendance" class="form-label">Attendance (%):</label>
+                                <input type="number" class="form-control" id="attendance" min="0" max="100" required>
+                            </div>
+                            <div class="mb-3">
+                                <label for="studyHours" class="form-label">Study Hours per Week:</label>
+                                <input type="number" class="form-control" id="studyHours" min="0" required>
+                            </div>
+                            <div class="mb-3">
+                                <label for="previousGrade" class="form-label">Previous Grade:</label>
+                                <input type="number" class="form-control" id="previousGrade" min="0" max="100" required>
+                            </div>
+                            <button type="submit" class="btn btn-primary">Predict Performance</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Prediction Result -->
+            <div class="col-md-6">
+                <div class="prediction-result">
+                    <h3> Average Predicted Performance</h3>
+                    <div id="predictionValue" class="prediction-value">--</div>
+                    <p class="text-muted">Comprehensive Performance Forecast</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Personalized Charts -->
+        <div class="row mt-4">
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-header">
+                        <h3>Performance Visualization</h3>
+                    </div>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-md-4 chart-container">
+                                <canvas id="radialChart"></canvas>
+                            </div>
+                            <div class="col-md-4 chart-container">
+                                <canvas id="radarChart"></canvas>
+                            </div>
+                            <div class="col-md-4 chart-container">
+                                <canvas id="barChart"></canvas>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Predict grade function (same as before)
+        function predictGrade(attendance, studyHours, previousGrade) {
+            const attendanceWeight = 0.4;
+            const studyHoursWeight = 0.3;
+            const previousGradeWeight = 0.3;
+
+            const predictedGrade =
+                (attendance * attendanceWeight) +
+                (studyHours * studyHoursWeight * 2) +
+                (previousGrade * previousGradeWeight);
+
+            return Math.min(100, Math.max(0, predictedGrade));
+        }
+
+        // Color palette
+        const colorPalette = {
+            attendance: {
+                start: '#3b82f6',
+                end: '#60a5fa'
+            },
+            studyHours: {
+                start: '#10b981',
+                end: '#34d399'
+            },
+            previousGrade: {
+                start: '#f59e0b',
+                end: '#fbbf24'
+            }
+        };
+
+        // Form submission handler
+        document.getElementById('studentForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+
+            const name = document.getElementById('name').value;
+            const attendance = parseFloat(document.getElementById('attendance').value);
+            const studyHours = parseFloat(document.getElementById('studyHours').value);
+            const previousGrade = parseFloat(document.getElementById('previousGrade').value);
+
+            const predicted = predictGrade(attendance, studyHours, previousGrade);
+            document.getElementById('predictionValue').textContent = `${predicted.toFixed(1)}%`;
+
+            // Radial Chart
+            const radialCtx = document.getElementById('radialChart').getContext('2d');
+            new Chart(radialCtx, {
+                type: 'polarArea',
+                data: {
+                    labels: ['Attendance', 'Study Hours', 'Previous Grade'],
+                    datasets: [{
+                        data: [attendance, studyHours, previousGrade],
+                        backgroundColor: [
+                            `linear-gradient(${colorPalette.attendance.start}, ${colorPalette.attendance.end})`,
+                            `linear-gradient(${colorPalette.studyHours.start}, ${colorPalette.studyHours.end})`,
+                            `linear-gradient(${colorPalette.previousGrade.start}, ${colorPalette.previousGrade.end})`
+                        ]
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    plugins: {
+                        title: {
+                            display: true,
+                            text: `${name}'s Performance Breakdown`
+                        }
+                    }
+                }
+            });
+
+            // Radar Chart
+            const radarCtx = document.getElementById('radarChart').getContext('2d');
+            new Chart(radarCtx, {
+                type: 'radar',
+                data: {
+                    labels: ['Attendance', 'Study Hours', 'Previous Grade'],
+                    datasets: [{
+                        label: `${name}'s Performance`,
+                        data: [attendance, studyHours, previousGrade],
+                        backgroundColor: 'rgba(54, 162, 235, 0.2)',
+                        borderColor: 'rgb(54, 162, 235)',
+                        pointBackgroundColor: 'rgb(54, 162, 235)'
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    elements: {
+                        line: {
+                            borderWidth: 3
+                        }
+                    },
+                    plugins: {
+                        title: {
+                            display: true,
+                            text: 'Comprehensive Performance Analysis'
+                        }
+                    }
+                }
+            });
+
+            // Bar Chart
+            const barCtx = document.getElementById('barChart').getContext('2d');
+            new Chart(barCtx, {
+                type: 'bar',
+                data: {
+                    labels: ['Attendance', 'Study Hours', 'Previous Grade'],
+                    datasets: [{
+                        label: `${name}'s Performance`,
+                        data: [attendance, studyHours, previousGrade],
+                        backgroundColor: [
+                            `linear-gradient(${colorPalette.attendance.start}, ${colorPalette.attendance.end})`,
+                            `linear-gradient(${colorPalette.studyHours.start}, ${colorPalette.studyHours.end})`,
+                            `linear-gradient(${colorPalette.previousGrade.start}, ${colorPalette.previousGrade.end})`
+                        ],
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    plugins: {
+                        title: {
+                            display: true,
+                            text: 'Performance Bar Chart'
+                        }
+                    }
+                }
+            });
+        });
+    </script>
+</body>
+{% endblock %}
