@@ -1,0 +1,9 @@
+input[type="range"] {
+    width: 100%; /* Make the slider full width */
+    margin: 10px 0; /* Add some margin */
+}
+
+label {
+    display: block; /* Make labels block elements */
+    margin-top: 10px; /* Add some space above labels */
+}
